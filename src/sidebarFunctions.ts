@@ -1,7 +1,7 @@
 import { SelectedFilters } from "./models/selectedFilter";
-import { HeaderFunctions } from "./header";
-import { AddEmployeesFunctions } from "./addEmployees";
-import { GlobalUtilityFunctions } from "./globalUtility";
+import { HeaderFunctions } from "./headerFunctions";
+import { GlobalUtilityFunctions } from "./globalUtilityFunctions";
+import { FilterFunctions } from "./filterFunctions";
 
 interface FilterOptions {
   status: string[];
@@ -11,15 +11,15 @@ interface FilterOptions {
 
 export class SideBarFunctions {
   headerFunctions: HeaderFunctions;
-  addEmployeeFunctions: AddEmployeesFunctions;
   globalUtilityFunctions: GlobalUtilityFunctions;
   filterOptions: FilterOptions;
+  filterFunctions: FilterFunctions;
 
-  constructor(headerFunctions: HeaderFunctions, addEmployeeFunctions: AddEmployeesFunctions, globalUtilityFunctions: GlobalUtilityFunctions, filterOptions: FilterOptions) {
+  constructor(headerFunctions: HeaderFunctions, globalUtilityFunctions: GlobalUtilityFunctions, filterOptions: FilterOptions, filterFunctions: FilterFunctions) {
     this.headerFunctions = headerFunctions;
-    this.addEmployeeFunctions = addEmployeeFunctions;
     this.globalUtilityFunctions = globalUtilityFunctions;
     this.filterOptions = filterOptions;
+    this.filterFunctions = filterFunctions;
   }
 
   toggleSubSecClass(
@@ -33,7 +33,7 @@ export class SideBarFunctions {
       if (element.classList.contains("active")) {
         element.classList.remove("active");
         form.reset();
-        this.addEmployeeFunctions.resetProfileImage();
+        this.globalUtilityFunctions.resetFormProfileImage();
         containerSelectors.forEach((containerSelector) => {
           let container = document.querySelector(
             containerSelector
@@ -62,8 +62,8 @@ export class SideBarFunctions {
         document.querySelector(removeContainer)?.classList.remove("active");
       });
     }
-    // filterFunctions.resetFilter();
-    // globalUtilityFunctions.resetSelectedFiltersState();
+    this.filterFunctions.resetFilter();
+    this.globalUtilityFunctions.resetSelectedFiltersState();
   }
 
   handleUpdateDismiss(): void {
@@ -74,9 +74,9 @@ export class SideBarFunctions {
   }
 
   sidebarFilter(selectedFilter: SelectedFilters): void {
-    // let selectedFilters = filterFunctions.getSelectedFilters();
+    let selectedFilters = this.filterFunctions.getSelectedFilters();
     const departmentName = selectedFilter.department[0];
-    // selectedFilters.department = [departmentName];
+    selectedFilters.department = [departmentName];
     const allDepartmentDivs = document.querySelectorAll(".dropdown-options");
     allDepartmentDivs.forEach((departmentDiv) => {
       const departmentValue = departmentDiv
@@ -94,7 +94,7 @@ export class SideBarFunctions {
         departmentDiv.classList.remove("selected");
       }
     });
-    // filterFunctions.handleFilterBar();
+    this.filterFunctions.handleFilterBar();
     const applyButton = document.querySelector(".btn-apply") as HTMLButtonElement;
     const resetButton = document.querySelector(".btn-reset") as HTMLButtonElement;
     applyButton.disabled = false;
@@ -104,16 +104,18 @@ export class SideBarFunctions {
       resetButton.disabled = true;
     }
     if (selectedFilter.department.length > 0) {
-      //   employeesPageFunctions.renderEmployees(
-      // filterFunctions.getFilteredData(selectedFilters)
-      //   );
+        this.globalUtilityFunctions.renderEmployees(
+      this.filterFunctions.getFilteredData(selectedFilters)
+        );
+        
     } else {
-      //   employeesPageFunctions.renderEmployees();
+        this.globalUtilityFunctions.renderEmployees(this.globalUtilityFunctions.getDataFromLocalStorage("employees"));
     }
+    this.populateDepartmentList();
   }
 
   populateDepartmentList(): void {
-    const employees = this.globalUtilityFunctions.getAllEmployeesFromLocalStorage();
+    const employees = this.globalUtilityFunctions.getDataFromLocalStorage("employees");
     const departmentCounts: { [key: string]: number } = {};
     if (employees) {
       employees.forEach((employee) => {

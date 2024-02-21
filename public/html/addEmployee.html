@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="../css/addEmployee.css" />
 <div class="add-employee-container">
     <h1>Add Employee</h1>
     <form id="employeeForm" class="employee-form" novalidate>
@@ -92,8 +93,8 @@
                     </div>
                 </div>
                 <div class="form-buttons">
-                    <button type="button" id="cancelButon" onclick="EMS.addEmployeesPageFunctions.handleAddEmployeesFormCancel(['.employees-page','.sub-sec.employees'],['.add-employee-container'])">Cancel</button>
-                    <button type="button" id="submitButton" onclick="EMS.addEmployeesPageFunctions.handleFormSubmit()">Add Employee</button>
+                    <button type="button" id="cancelButon" onclick="window.ems.addEmployeesFunctions.handleAddEmployeesFormCancel(['.employees-page','.sub-sec.employees'],['.add-employee-container'])">Cancel</button>
+                    <button type="button" id="submitButton" onclick="window.ems.addEmployeesFunctions.handleFormSubmit()">Add Employee</button>
                 </div>
             </div>
     </form>

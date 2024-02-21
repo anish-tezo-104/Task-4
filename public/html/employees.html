@@ -1,3 +1,4 @@
+    <link rel="stylesheet" href="../css/employees.css" />
 <div class="employees-page">
   <!--Functions Employees-->
   <div class="function-container employees">
@@ -8,7 +9,7 @@
       </div>
     </div>
     <div class="function-right">
-      <button class="export-button" onclick="EMS.employeesPageFunctions.exportCSV('employees.csv', ['status', 'profileImageBase64'])">
+      <button class="export-button" onclick="window.ems.employeesFunctions.exportEmployeesToCSV('employees.csv', ['status', 'profileImageBase64'])">
         <img
           src="../assets/export-icon.svg"
           alt="Export Icon"
@@ -17,7 +18,7 @@
       </button>
       <button
         class="function-button function-add-button"
-        onclick="EMS.employeesPageFunctions.handleAddEmployeeBtn(this, ['.employees-page'])">
+        onclick="window.ems.employeesFunctions.handleAddEmployeeBtn(this, ['.employees-page'])">
         <img src="../assets/add.svg" alt="Plus Icon" />
         <span>ADD EMPLOYEE</span>
       </button>
@@ -27,7 +28,7 @@
   <div class="alph-sort">
     <div
       class="filter-icon"
-      onclick="EMS.employeesPageFunctions.toggleFilterClass(this,['.filter-container'])">
+      onclick="window.ems.employeesFunctions.toggleFilterClass(this,['.filter-container'])">
       <span class="icon-filter"></span>
     </div>
     <div class="alphabets-container" id="alphabetsContainer"></div>
@@ -38,8 +39,8 @@
     <!-- Filter options will be dynamically generated here -->
   </div>
   <div class="filter-container-right">
-    <button class="btn-reset" onclick="EMS.filterFunctions.resetFilter()">Reset</button>
-    <button class="btn-apply" onclick="EMS.filterFunctions.updateFilteredResults()">Apply</button>
+    <button class="btn-reset" onclick="window.ems.filterFunctions.resetFilter()" disabled>Reset</button>
+    <button class="btn-apply" onclick="window.ems.filterFunctions.updateFilteredResults()" disabled>Apply</button>
   </div>
 </div>
   <!--Employees Container-->
@@ -53,7 +54,7 @@
               alt="Arrow Turn Left Down Icon" />
           </div>
           <div class="delete-button">
-            <button class="btn-delete" onclick="EMS.employeesPageFunctions.deleteSelectedRows()">Delete</button>
+            <button class="btn-delete" onclick="window.ems.employeesFunctions.deleteSelectedRows()">Delete</button>
           </div>
         </div>
         <div class="above-section-right">
@@ -71,31 +72,31 @@
             <th class="check-box-col">
               <input type="checkbox" id="all-checkbox" />
             </th>
-            <th class="col col-user" onclick="EMS.employeesPageFunctions.sortTable(1)">
+            <th class="col col-user" onclick="window.ems.employeesFunctions.sortTable(1)">
               <span>USER</span>
               <span class="material-icons-outlined sort-icon">unfold_more</span>
             </th>
-            <th class="col col-location" onclick="EMS.employeesPageFunctions.sortTable(2)">
+            <th class="col col-location" onclick="window.ems.employeesFunctions.sortTable(2)">
               <span>LOCATION</span>
               <span class="material-icons-outlined sort-icon">unfold_more</span>
             </th>
-            <th class="col col-department" onclick="EMS.employeesPageFunctions.sortTable(3)">
+            <th class="col col-department" onclick="window.ems.employeesFunctions.sortTable(3)">
               <span>DEPARTMENT</span>
               <span class="material-icons-outlined sort-icon">unfold_more</span>
             </th>
-            <th class="col col-role" onclick="EMS.employeesPageFunctions.sortTable(4)">
+            <th class="col col-role" onclick="window.ems.employeesFunctions.sortTable(4)">
               <span>ROLE</span>
               <span class="material-icons-outlined sort-icon">unfold_more</span>
             </th>
-            <th class="col col-emp-no" onclick="EMS.employeesPageFunctions.sortTable(5)">
+            <th class="col col-emp-no" onclick="window.ems.employeesFunctions.sortTable(5)">
               <span>EMP NO</span>
               <span class="material-icons-outlined sort-icon">unfold_more</span>
             </th>
-            <th class="col col-status" onclick="EMS.employeesPageFunctions.sortTable(6)">
+            <th class="col col-status" onclick="window.ems.employeesFunctions.sortTable(6)">
               <span>STATUS</span>
               <span class="material-icons-outlined sort-icon">unfold_more</span>
             </th>
-            <th class="col col-join-dt" onclick="EMS.employeesPageFunctions.sortTable(7)">
+            <th class="col col-join-dt" onclick="window.ems.employeesFunctions.sortTable(7)">
               <span>JOIN DT</span>
               <span class="material-icons-outlined sort-icon">unfold_more</span>
             </th>

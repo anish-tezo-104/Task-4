@@ -17,6 +17,9 @@
   margin: 0.2rem 0.2rem;
 }
 
+.employees-table .profile-details {
+  width: auto;
+}
 
 
 .alph-btn:hover {
@@ -210,7 +213,7 @@ tr:hover {
 
 
 .col {
- padding: 0 1.5rem;
+ padding: 0 0.8rem;
 }
 
 
@@ -308,12 +311,6 @@ button[disabled], .btn-delete:hover {
   .th span:nth-child(1) {
     font-size: 0.8rem;
   }
-/* 
-  .col-user,
-  .col-role {
-    width: 12% !important;
-  } */
-
   .sort-icon {
     font-size: 0.8rem !important;
   }

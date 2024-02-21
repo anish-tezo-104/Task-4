@@ -1,10 +1,13 @@
-import { GlobalUtilityFunctions } from "./globalUtility";
+import { GlobalUtilityFunctions } from "./globalUtilityFunctions";
 import { Employee } from "./models/employee";
+import { SideBarFunctions } from "./sidebarFunctions";
 export class AddEmployeesFunctions {
 
     globalUtilityFunctions: GlobalUtilityFunctions;
-    constructor(globalUtilityFunctions: GlobalUtilityFunctions) {
+    sidebarFunctions: SideBarFunctions;
+    constructor(globalUtilityFunctions: GlobalUtilityFunctions, sidebarFunctions: SideBarFunctions) {
         this.globalUtilityFunctions = globalUtilityFunctions;
+        this.sidebarFunctions = sidebarFunctions
     }
 
     populateSelectOptions(selectId: string, options: string[]): void {
@@ -54,13 +57,13 @@ export class AddEmployeesFunctions {
             if (this.validateForm(formData)) {
                 this.createEmployeeFromFormData(formData);
                 form.reset();
-                this.resetProfileImage();
+                this.globalUtilityFunctions.resetFormProfileImage();
                 alert("Employee data added successfully!");
-                // globalUtilityFunctions.loadEmployees();
             }
         } else {
             console.error("Employee form not found.");
         }
+        this.sidebarFunctions.populateDepartmentList();
     }
 
     createEmployeeFromFormData(formData: FormData): void {
@@ -127,7 +130,7 @@ export class AddEmployeesFunctions {
     }
 
     saveEmployeeToLocalStorage(employee: Employee): void {
-        let existingData: Employee[] = this.globalUtilityFunctions.getAllEmployeesFromLocalStorage() || [];
+        let existingData: Employee[] = this.globalUtilityFunctions.getDataFromLocalStorage("employees") || [];
         if (employee) {
             existingData.push(employee);
             localStorage.setItem("employees", JSON.stringify(existingData));
@@ -201,15 +204,4 @@ export class AddEmployeesFunctions {
             errorMessage.classList.remove("active");
         }
     }
-    resetProfileImage(): void {
-        const defaultImageSource = "../assets/default-user.png";
-        const profileImagePreview = document.getElementById(
-            "profileImagePreview"
-        ) as HTMLImageElement | null;
-        if (profileImagePreview) {
-            profileImagePreview.src = defaultImageSource;
-        }
-    }
-
-
 }

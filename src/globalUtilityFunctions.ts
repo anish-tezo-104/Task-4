@@ -1,13 +1,13 @@
+import { EmployeesFunctions } from "./employeeFunctions";
 import { Employee } from "./models/employee";
+import { SelectedFilters } from "./models/selectedFilter";
 
 export class GlobalUtilityFunctions {
-    constructor() { }
-    loadEmployees(): void {
-        let employees = this.getAllEmployeesFromLocalStorage();
-        if (employees) {
-            // employeesPageFunctions.renderEmployees(employees);
-        }
+    selectedFilters: SelectedFilters;
+    constructor(selectedFilters: SelectedFilters) { 
+        this.selectedFilters = selectedFilters;
     }
+    
     handleSidebarResponsive(): void {
         const sideBar = document.querySelector(".sidebar");
 
@@ -20,9 +20,49 @@ export class GlobalUtilityFunctions {
         }
     }
 
+    renderEmployees(filteredData: Employee[]): void {
+        const tableBody = document.querySelector<HTMLTableSectionElement>(".employees-table tbody");
+        if (!tableBody) return;
 
-    getAllEmployeesFromLocalStorage(): Employee[] {
-        const employeesData = localStorage.getItem("employees");
+        tableBody.innerHTML = "";
+
+        filteredData.forEach((employee) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+            <td class="check-box-col"><input type="checkbox"/></td>
+            <td class="col col-user">
+                <div class="profile-card emp-card">
+                    <img src="${employee.profileImageBase64}" alt="Employee Image" class="employee-img" />
+                    <div class="profile-details">
+                        <p class="profile-name">${employee.firstName} ${employee.lastName}</p>
+                        <p class="profile-email">${employee.email}</p>
+                    </div>
+                </div>
+            </td>
+            <td class="col col-location">${employee.location}</td>
+            <td class="col col-department">${employee.department}</td>
+            <td class="col col-role">${employee.jobTitle}</td>
+            <td class="col col-emp-no">${employee.empNo}</td>
+            <td class="col col-status">
+                <div class="btn-active">${employee.status ? "Active" : "Inactive"}</div>
+            </td>
+            <td class="col col-join-dt">${employee.joiningDate}</td>
+            <td>
+                <span class="material-icons-outlined ellipsis-icon" onclick="EMS.employeesPageFunctions.ellipsisFunction(this)">more_horiz</span>
+                <div class="ellipsis-menu">
+                    <ul>
+                        <li><a href="#" onclick="EMS.employeesPageFunctions.viewDetails()">View Details</a></li>
+                        <li><a href="#" onclick="EMS.employeesPageFunctions.editRow()">Edit</a></li>
+                        <li onclick="EMS.employeesPageFunctions.deleteRow(this)"><a href="#">Delete</a></li>
+                    </ul>
+                </div>
+            </td>
+        `;
+            tableBody.appendChild(row);
+        });
+    }
+    getDataFromLocalStorage(key:string): Employee[] {
+        const employeesData = localStorage.getItem(key);
         return employeesData ? JSON.parse(employeesData) : [];
     }
 
@@ -88,6 +128,11 @@ export class GlobalUtilityFunctions {
         }
     }
 
+    exportCSV(filename: string, excludedColumns: string[], tableData: any[]) {
+    const csvContent = this.convertToCSV(tableData, excludedColumns);
+    this.downloadCSVFile(csvContent, filename);
+}
+
     updateGridTemplateColumns(): void {
         var screenWidth = window.innerWidth;
         var sideBar = document.querySelector(".sidebar");
@@ -141,10 +186,20 @@ export class GlobalUtilityFunctions {
         link.click();
         URL.revokeObjectURL(url);
     }
-    // resetSelectedFiltersState(): void {
-    //     selectedFilters.alphabet = [];
-    //     selectedFilters.status = [];
-    //     selectedFilters.location = [];
-    //     selectedFilters.department = [];
-    // }
+    resetSelectedFiltersState(): void {
+        this.selectedFilters.alphabet = [];
+        this.selectedFilters.status = [];
+        this.selectedFilters.location = [];
+        this.selectedFilters.department = [];
+    }
+
+    resetFormProfileImage(): void {
+        const defaultImageSource = "../assets/default-user.png";
+        const profileImagePreview = document.getElementById(
+            "profileImagePreview"
+        ) as HTMLImageElement | null;
+        if (profileImagePreview) {
+            profileImagePreview.src = defaultImageSource;
+        }
+    }
 }

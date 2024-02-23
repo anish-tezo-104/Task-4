@@ -51,7 +51,21 @@ h4 {
 }
 
 
+
+.coming-soon-message{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
 /** Functions */
+
+.function-button:hover {
+  background-color: #f77575;
+  cursor: pointer;
+}
 
 .function-left .heading {
   font-size: 1.2rem;
@@ -89,9 +103,6 @@ h4 {
   margin-top: 1rem !important;
 }
 
-/* .function-container {
-  display: none
-} */
 
 .function-container .sub-heading {
   line-height: 1.4rem;

@@ -41,17 +41,13 @@
   justify-content: space-around;
 }
 
-.alph-sort.active {
+.alph-sort{
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
   margin-left: 1.5rem;
   padding-right: 1rem;
-}
-
-.alph-sort {
-  display: none;
 }
 
 .filter-icon {
@@ -82,19 +78,7 @@
   color: #f44848;
 }
 
-/* .employees-container {
-  display: none;
-} */
 
-.employees-container{
-  display: block;
-}
-
-.function-button:hover {
-  background-color: #f77575;
-  cursor: pointer;
-
-}
 
 .export-button:hover {
   background-color: rgba(0, 0, 0, 0.1);
@@ -117,10 +101,6 @@
 }
 
 .employees-page {
-  display: none;
-}
-
-.employees-page.active {
   display: block;
 }
 

@@ -20,52 +20,68 @@ export class FilterFunctions {
         </div>
     `).join("");
     }
-    populateFilterOptions(): void {
-        const filterContainerLeft = document.getElementById("filterContainerLeft");
-        if (!filterContainerLeft) return;
+populateFilterOptions(locationCheck: boolean, statusCheck: boolean, departmentCheck: boolean): void {
+    const filterContainerLeft = document.getElementById("filterContainerLeft");
+    if (!filterContainerLeft) return;
 
-        filterContainerLeft.innerHTML = `
-        <div class="dropdown dropdown-status" onclick="window.ems.filterFunctions.handleFilterDropdown(this)">
-            <button class="filter-btn btn-status dropbtn" data-default-text="Status">
-                <div>Status</div>
-                <div class="expand-more-icon">
-                    <span class="material-icons-outlined expand-more-icon">
-                        expand_more
-                    </span>
+    let filterOptionsHTML = '';
+
+    if (statusCheck) {
+        filterOptionsHTML += `
+            <div class="dropdown dropdown-status" onclick="window.ems.filterFunctions.handleFilterDropdown(this)">
+                <button class="filter-btn btn-status dropbtn" data-default-text="Status">
+                    <div>Status</div>
+                    <div class="expand-more-icon">
+                        <span class="material-icons-outlined expand-more-icon">
+                            expand_more
+                        </span>
+                    </div>
+                </button>
+                <div class="dropdown-content">
+                    ${window.ems.filterFunctions.generateFilterOptions(window.ems.filterOptions.status, "status")}
                 </div>
-            </button>
-            <div class="dropdown-content">
-                ${window.ems.filterFunctions.generateFilterOptions(window.ems.filterOptions.status, "status")}
             </div>
-        </div>
-        <div class="dropdown dropdown-location" onclick="window.ems.filterFunctions.handleFilterDropdown(this)">
-            <button class="filter-btn btn-location dropbtn" data-default-text="Location">
-                <div>Location</div>
-                <div class="expand-more-icon">
-                    <span class="material-icons-outlined expand-more-icon">
-                        expand_more
-                    </span>
-                </div>
-            </button>
-            <div class="dropdown-content">
-                ${window.ems.filterFunctions.generateFilterOptions(window.ems.filterOptions.location, "location")}
-            </div>
-        </div>
-        <div class="dropdown dropdown-department" onclick="window.ems.filterFunctions.handleFilterDropdown(this)">
-            <button class="filter-btn btn-department dropbtn" data-default-text="Department">
-                <div>Department</div>
-                <div class="expand-more-icon">
-                    <span class="material-icons-outlined expand-more-icon">
-                        expand_more
-                    </span>
-                </div>
-            </button>
-            <div class="dropdown-content">
-                ${window.ems.filterFunctions.generateFilterOptions(window.ems.filterOptions.department, "department")}
-            </div>
-        </div>
-    `;
+        `;
     }
+
+    if (locationCheck) {
+        filterOptionsHTML += `
+            <div class="dropdown dropdown-location" onclick="window.ems.filterFunctions.handleFilterDropdown(this)">
+                <button class="filter-btn btn-location dropbtn" data-default-text="Location">
+                    <div>Location</div>
+                    <div class="expand-more-icon">
+                        <span class="material-icons-outlined expand-more-icon">
+                            expand_more
+                        </span>
+                    </div>
+                </button>
+                <div class="dropdown-content">
+                    ${window.ems.filterFunctions.generateFilterOptions(window.ems.filterOptions.location, "location")}
+                </div>
+            </div>
+        `;
+    }
+
+    if (departmentCheck) {
+        filterOptionsHTML += `
+            <div class="dropdown dropdown-department" onclick="window.ems.filterFunctions.handleFilterDropdown(this)">
+                <button class="filter-btn btn-department dropbtn" data-default-text="Department">
+                    <div>Department</div>
+                    <div class="expand-more-icon">
+                        <span class="material-icons-outlined expand-more-icon">
+                            expand_more
+                        </span>
+                    </div>
+                </button>
+                <div class="dropdown-content">
+                    ${window.ems.filterFunctions.generateFilterOptions(window.ems.filterOptions.department, "department")}
+                </div>
+            </div>
+        `;
+    }
+
+    filterContainerLeft.innerHTML = filterOptionsHTML;
+}
 
     handleFilterDropdown(element: HTMLElement): void {
         if (element.classList.contains("active")) {

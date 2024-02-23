@@ -14,7 +14,6 @@ export class SideBarFunctions {
   globalUtilityFunctions: GlobalUtilityFunctions;
   filterOptions: FilterOptions;
   filterFunctions: FilterFunctions;
-
   constructor(headerFunctions: HeaderFunctions, globalUtilityFunctions: GlobalUtilityFunctions, filterOptions: FilterOptions, filterFunctions: FilterFunctions) {
     this.headerFunctions = headerFunctions;
     this.globalUtilityFunctions = globalUtilityFunctions;
@@ -24,22 +23,14 @@ export class SideBarFunctions {
 
   toggleSubSecClass(
     element: HTMLElement,
-    containerSelectors: string[],
-    removeContainers: string[],
-    removeActiveSubSec: string[]
   ): void {
+
     const form = document.getElementById("employeeForm") as HTMLFormElement;
     if (element.classList.contains("unlocked")) {
       if (element.classList.contains("active")) {
         element.classList.remove("active");
-        form.reset();
         this.globalUtilityFunctions.resetFormProfileImage();
-        containerSelectors.forEach((containerSelector) => {
-          let container = document.querySelector(
-            containerSelector
-          ) as HTMLElement;
-          container.classList.remove("active");
-        });
+        this.globalUtilityFunctions.hideShowDepartmentListSidebar(false)
       } else {
         if (window.innerWidth <= 900) {
           var sideBar = document.querySelector(".sidebar") as HTMLElement;
@@ -51,16 +42,7 @@ export class SideBarFunctions {
           subSec.classList.remove("active");
         });
         element.classList.add("active");
-        containerSelectors.forEach((containerSelector) => {
-          let container = document.querySelector(
-            containerSelector
-          ) as HTMLElement;
-          container.classList.add("active");
-        });
       }
-      removeContainers.forEach((removeContainer) => {
-        document.querySelector(removeContainer)?.classList.remove("active");
-      });
     }
     this.filterFunctions.resetFilter();
     this.globalUtilityFunctions.resetSelectedFiltersState();
@@ -115,6 +97,7 @@ export class SideBarFunctions {
   }
 
   populateDepartmentList(): void {
+    console.log("Populate Department List");
     const employees = this.globalUtilityFunctions.getDataFromLocalStorage("employees");
     const departmentCounts: { [key: string]: number } = {};
     if (employees) {
@@ -154,8 +137,9 @@ export class SideBarFunctions {
     departmentName: string,
     employeeCount: number
   ): string {
+    console.log("Generate List Item", departmentName, employeeCount);
     return `
-      <li onclick="ems.sideBarFunctions.sidebarFilter({ 'department': ['${departmentName
+      <li onclick="window.ems.sideBarFunctions.sidebarFilter({ 'department': ['${departmentName
         .trim()
         .toLowerCase()}'] })">
         <a href="#">

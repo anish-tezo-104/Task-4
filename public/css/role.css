@@ -1,7 +1,3 @@
-/* Role Container */
-/* .roles-container, .roles-desc-container {
-  display: none;
-} */
 
 .roles-container, .roles-desc-container {
   display: grid;
@@ -17,13 +13,6 @@
   margin-top: 10px;
 }
 
-.role-page {
-  display: none;
-}
-
-.role-page.active {
-  display: block;
-}
 
 .roles-container-item {
   width: 100%;

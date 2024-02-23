@@ -4,10 +4,24 @@ import { SelectedFilters } from "./models/selectedFilter";
 
 export class GlobalUtilityFunctions {
     selectedFilters: SelectedFilters;
-    constructor(selectedFilters: SelectedFilters) { 
+
+
+
+    locationOptions = ["Select location", "Hyderabad", "Delhi", "Mumbai", "Bangalore", "Seattle", "New York"];
+
+    jobTitleOptions = ["Select job title", "UX Designer", "Front End Developer", "Back End Developer", "Full Stack Developer", "Android Developer", "iOS Developer", "Java Developer", "Python Developer", "PHP Developer"];
+
+    departmentOptions = ["Select department", "UI/UX", "HR", "IT", "Product Engineering", "Management", "Finance"];
+
+    managerOptions = ["Select manager", "None", "John Doe", "Jane Smith", "Michael Johnson"];
+
+    projectOptions = ["Select project", "None", "Project 1", "Project 2", "Project 3"];
+
+    constructor(selectedFilters: SelectedFilters) {
         this.selectedFilters = selectedFilters;
     }
-    
+
+    addEmployeesForm: boolean = false;
     handleSidebarResponsive(): void {
         const sideBar = document.querySelector(".sidebar");
 
@@ -16,6 +30,25 @@ export class GlobalUtilityFunctions {
                 sideBar.classList.remove("active");
             } else {
                 sideBar.classList.add("active");
+            }
+        }
+    }
+
+    loadEmployees(): void {
+        let employees = this.getDataFromLocalStorage("employees");
+        if (employees) {
+            this.renderEmployees(employees);
+        }
+    }
+
+    hideShowDepartmentListSidebar(check: boolean): void {
+        const departmentListDiv = document.querySelector(".departments");
+        if (departmentListDiv) {
+            if (check) {
+                departmentListDiv.classList.add("active");
+            }
+            else {
+                departmentListDiv.classList.remove("active");
             }
         }
     }
@@ -48,12 +81,12 @@ export class GlobalUtilityFunctions {
             </td>
             <td class="col col-join-dt">${employee.joiningDate}</td>
             <td>
-                <span class="material-icons-outlined ellipsis-icon" onclick="EMS.employeesPageFunctions.ellipsisFunction(this)">more_horiz</span>
+                <span class="material-icons-outlined ellipsis-icon" onclick="window.ems.employeesFunctions.ellipsisFunction(this)">more_horiz</span>
                 <div class="ellipsis-menu">
                     <ul>
-                        <li><a href="#" onclick="EMS.employeesPageFunctions.viewDetails()">View Details</a></li>
-                        <li><a href="#" onclick="EMS.employeesPageFunctions.editRow()">Edit</a></li>
-                        <li onclick="EMS.employeesPageFunctions.deleteRow(this)"><a href="#">Delete</a></li>
+                        <li><a href="#" onclick="window.ems.employeesFunctions.viewDetails()">View Details</a></li>
+                        <li><a href="#" onclick="window.ems.employeesFunctions.editRow()">Edit</a></li>
+                        <li onclick="window.ems.employeesFunctions.deleteRow(this)"><a href="#">Delete</a></li>
                     </ul>
                 </div>
             </td>
@@ -61,7 +94,7 @@ export class GlobalUtilityFunctions {
             tableBody.appendChild(row);
         });
     }
-    getDataFromLocalStorage(key:string): Employee[] {
+    getDataFromLocalStorage(key: string): Employee[] {
         const employeesData = localStorage.getItem(key);
         return employeesData ? JSON.parse(employeesData) : [];
     }
@@ -129,9 +162,9 @@ export class GlobalUtilityFunctions {
     }
 
     exportCSV(filename: string, excludedColumns: string[], tableData: any[]) {
-    const csvContent = this.convertToCSV(tableData, excludedColumns);
-    this.downloadCSVFile(csvContent, filename);
-}
+        const csvContent = this.convertToCSV(tableData, excludedColumns);
+        this.downloadCSVFile(csvContent, filename);
+    }
 
     updateGridTemplateColumns(): void {
         var screenWidth = window.innerWidth;

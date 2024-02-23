@@ -1,5 +1,5 @@
 
-<link rel="stylesheet" href="../css/sidebar.css" />
+
 <div>
   <div class="profile-card" onclick="window.ems.headerFunctions.toggleSideBar()">
     <div class="profile-pic-container">
@@ -29,14 +29,12 @@
       </div>
       <div class="sub-section">
         <div
-          class="sub-sec dashboard item unlocked active"
-          onclick="window.ems.sideBarFunctions.toggleSubSecClass(this,[],['.role-page','.add-roles-container','.add-employee-container','.roles-desc-page','.employees-page'])">
+          class="sub-sec dashboard item unlocked"
+          onclick="window.ems.sideBarFunctions.toggleSubSecClass(this,[],[])">
           <div class="sub-sec-left">
             <div class="sub-sec-left-left">
-              <!-- <div class="dashboard-icon-container sidebar-icons">
-                <span>aaaaaaaa</span>
-              </div> -->
-              <img src="../assets/dashboard.svg" alt="Dashboard Icon">
+              <div class="dashboard-icon-container sidebar-icons icon-roles">
+              </div>
               <h4>Dashboard</h4>
             </div>
             <div class="expand-collapsed-icons">
@@ -50,13 +48,11 @@
         </div>
         <div
           class="sub-sec employees item unlocked"
-          onclick="window.ems.sideBarFunctions.toggleSubSecClass(this, ['.employees-page','.sub-sec.employees.item','.departments','.alph-sort'], ['.role-page','.add-roles-container','.add-employee-container','.roles-desc-page'])">
+          onclick="window.ems.sideBarFunctions.toggleSubSecClass(this, [], [])">
           <div class="sub-sec-left">
             <div class="sub-sec-left-left">
-              <!-- <div class="employees-icon-container sidebar-icons">
-                <span>aaaaaaaa</span>
-              </div> -->
-              <img src="../assets/employees.svg" alt="Employees Icon">
+              <div class="employees-icon-container sidebar-icons icon-roles">
+              </div>
               <h4>Employees</h4>
             </div>
             <div class="expand-collapsed-icons">
@@ -85,7 +81,7 @@
     <div class="management-sub-section active">
       <div
         class="sub-sec roles item unlocked"
-        onclick="window.ems.sideBarFunctions.toggleSubSecClass(this, ['.role-page'],['.employees-page','.roles-desc-page','.add-roles-container','.add-employee-container'])">
+        onclick="window.ems.sideBarFunctions.toggleSubSecClass(this, [],[])">
         <div class="sub-sec-left">
           <div class="sub-sec-left-left">
             <span class="icon-roles sidebar-roles-icon"></span>
@@ -106,7 +102,7 @@
       </div>
       <div
         class="sub-sec access-rights item unlocked"
-        onclick="window.ems.sideBarFunctions.toggleSubSecClass(this,[],['.role-page','.add-roles-container','.add-employee-container','.roles-desc-page','.employees-page'])">
+        onclick="window.ems.sideBarFunctions.toggleSubSecClass(this,[],[])">
         <div class="sub-sec-left">
           <div class="sub-sec-left-left">
             <span class="icon-assign-user sidebar-assign-user-icon"></span>

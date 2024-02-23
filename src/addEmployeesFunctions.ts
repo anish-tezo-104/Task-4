@@ -1,13 +1,19 @@
+import { FilterFunctions } from "./filterFunctions";
 import { GlobalUtilityFunctions } from "./globalUtilityFunctions";
 import { Employee } from "./models/employee";
+import { RenderingHTML } from "./renderingHTML";
 import { SideBarFunctions } from "./sidebarFunctions";
 export class AddEmployeesFunctions {
 
     globalUtilityFunctions: GlobalUtilityFunctions;
     sidebarFunctions: SideBarFunctions;
-    constructor(globalUtilityFunctions: GlobalUtilityFunctions, sidebarFunctions: SideBarFunctions) {
+    renderingHTML: RenderingHTML;
+    filterFunctions: FilterFunctions;
+    constructor(globalUtilityFunctions: GlobalUtilityFunctions, sidebarFunctions: SideBarFunctions, renderingHTML: RenderingHTML, filterFunctions: FilterFunctions) {
         this.globalUtilityFunctions = globalUtilityFunctions;
         this.sidebarFunctions = sidebarFunctions
+        this.renderingHTML = renderingHTML
+        this.filterFunctions = filterFunctions
     }
 
     populateSelectOptions(selectId: string, options: string[]): void {
@@ -25,21 +31,6 @@ export class AddEmployeesFunctions {
         }
     }
 
-    handleAddEmployeesFormCancel(activeContainers: string[], removeContainers: string[]): void {
-        let form: HTMLFormElement | null = document.getElementById("employeeForm") as HTMLFormElement | null;
-        let defaultImageSource: string = "../assets/default-user.png";
-        const profileImagePreview: HTMLImageElement | null = document.getElementById("profileImagePreview") as HTMLImageElement | null;
-
-        if (profileImagePreview) {
-            profileImagePreview.src = defaultImageSource;
-        }
-
-        if (form) {
-            // globalUtilityFunctions.handlePostFormSubmissions(form, activeContainers, removeContainers);
-        } else {
-            console.error("Employee form not found.");
-        }
-    }
 
     openProfileImageInput(): void {
         const profileImageInput: HTMLElement | null = document.getElementById("profileImageInput");
@@ -50,15 +41,19 @@ export class AddEmployeesFunctions {
 
     handleFormSubmit(): void {
         const form: HTMLFormElement | null = document.getElementById("employeeForm") as HTMLFormElement | null;
-
         if (form) {
             const formData = new FormData(form);
-
             if (this.validateForm(formData)) {
                 this.createEmployeeFromFormData(formData);
                 form.reset();
                 this.globalUtilityFunctions.resetFormProfileImage();
                 alert("Employee data added successfully!");
+                this.renderingHTML.includeHTML("./html/employees.html").then(() => {
+                    this.sidebarFunctions.populateDepartmentList();
+                    this.filterFunctions.generateAlphabetButtons();
+                    this.globalUtilityFunctions.loadEmployees();
+                    this.filterFunctions.populateFilterOptions(true, true, true);
+                });
             }
         } else {
             console.error("Employee form not found.");

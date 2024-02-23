@@ -10,6 +10,11 @@
   transition: width 0.3s ease-in-out;
 }
 
+.employees-icon-container, .dashboard-icon-container{
+  height :1.5rem;
+  width: 2rem;
+  margin: 0 0.2rem 0 0;
+}
 .sidebar {
   height: 100vh;
 }
@@ -128,7 +133,7 @@
 
 .sidebar .sub-sec.active {
   justify-content: center;
-  margin: 0 0 0.3rem 0;
+
   background-color: #fde9e9;
   width: 100%;
 }
@@ -156,7 +161,8 @@
 
 .sub-sec-left:hover {
   background-color: #fde9e9;
-  border-radius: 8px;
+  border-radius: 6px;
+  width: 100%;
   cursor: pointer;
   height: 2.5rem;
   color: #f44848 !important;
@@ -218,13 +224,32 @@
 
 .sidebar .sub-sec-left {
   padding-right: 0;
-  width: 100%;
+  width: 90%;
   justify-content: center;
+}
+
+.sidebar.active .sub-sec.employees .sub-sec-left {
+  padding-left: 0.7rem;
+  margin-right: 1rem!important;
+}
+
+.sidebar.active .sub-sec.employees.active .sub-sec-left {
+  padding-left: 0.7rem!important;
+  margin-right: 0.6rem!important;
+}
+
+.sidebar.active .sub-sec.dashboard .sub-sec-left {
+  padding-left: 0.7rem;
+  margin-right: 1rem!important;
+}
+
+.sidebar.active .sub-sec.dashboard.active .sub-sec-left {
+  padding-left: 0.7rem!important;
+  margin-right: 0.6rem!important;
 }
 
 .sidebar.active .sub-sec-left {
   padding-right: 0.8rem;
-  width: 90%;
   justify-content: space-between;
 }
 
@@ -264,11 +289,10 @@
   border-radius: 0.5rem;
   background-color: #fde9e9;
   color: #f44848 !important;
-  width: 90%;
+  width: 95%;
 }
 
 .sidebar .sub-sec.unlocked.active .sub-sec-left .sidebar-icons {
-  height: 100%;
   border-radius: 0.5rem 0 0;
   color: #f44848 !important;
 }
@@ -481,10 +505,12 @@
 
 .sub-sec-left:hover .sidebar-icons {
   background-color: #f44848;
+  
 }
 
 .sub-sec-left.active .sidebar-icons {
   background-color: #f44848;
+  
 }
 
 .sub-sec-left.active .sidebar-roles-icon {

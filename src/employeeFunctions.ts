@@ -22,23 +22,17 @@ export class EmployeesFunctions {
         this.globalUtilityFunctions.exportCSV(filename, excludedColumns, filteredEmployees);
     }
 
-    handleAddEmployeeBtn(element: HTMLElement, removeContainers: string[]) {
-        const addEmployeePage = document.querySelector(".add-employee-container");
-        if (addEmployeePage && addEmployeePage.classList.contains("active")) {
-            element.classList.remove("active");
-        } else {
-            removeContainers.forEach((removeContainer) => {
-                const container = document.querySelector(removeContainer);
+    handleAddEmployeeBtn(element: HTMLElement): void {
+        this.globalUtilityFunctions.addEmployeesForm = true;
+        document.addEventListener("DOMContentLoaded", () => {
+            if (this.globalUtilityFunctions.addEmployeesForm == true) {
+                const container = document.getElementById("displayWindow");
                 if (container) {
-                    container.classList.remove("active");
+                    container.innerHTML = "";
                 }
-            });
-            if (addEmployeePage) {
-                addEmployeePage.classList.add("active");
             }
-        }
+        })
     }
-
     toggleFilterClass(element: HTMLElement, containerSelectors: string[]) {
         const btnStatus = document.querySelector(".btn-status");
         if (element.classList.contains("active")) {
@@ -66,13 +60,7 @@ export class EmployeesFunctions {
         }
     }
 
-    loadEmployees(): void {
-        let employees = this.globalUtilityFunctions.getDataFromLocalStorage("employees");
-        if (employees) {
-            this.globalUtilityFunctions.renderEmployees(employees);
-            this.sideBarFunctions.populateDepartmentList();
-        }
-    }
+    
 
     deleteSelectedRows(): void {
         const allCheckboxes = document.querySelectorAll<HTMLInputElement>(".check-box-col input");
@@ -107,7 +95,7 @@ export class EmployeesFunctions {
         localStorage.setItem("employees", JSON.stringify(existingData));
         // this.toggleDeleteButtonVisibility();
         alert("Successfully deleted " + deletedRowCount + " employees data");
-        this.loadEmployees();
+        this.globalUtilityFunctions.loadEmployees();
         this.sideBarFunctions.populateDepartmentList();
     }
 
@@ -181,7 +169,7 @@ export class EmployeesFunctions {
         localStorage.setItem("employees", JSON.stringify(existingData));
 
         tableRow.remove();
-        this.loadEmployees();
+        this.globalUtilityFunctions.loadEmployees();
         this.sideBarFunctions.populateDepartmentList();
         alert("Employee data deleted successfully!");
     }

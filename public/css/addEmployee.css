@@ -3,11 +3,6 @@
     font-size: 1.2rem;
 
 }
-
-.add-employee-container {
-    display: none;
-}
-
 .personal-information-container {
     margin: 3rem 0;
 }
@@ -37,7 +32,7 @@
 
 }
 
-.add-employee-container.active {
+.add-employee-container {
     margin: 0 1rem 2rem 2.5rem;
     display: flex;
     flex-direction: column;
